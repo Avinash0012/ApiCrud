@@ -1,0 +1,72 @@
+﻿@model IEnumerable<APICRUD.Entities_.Student>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class)
+            </td>
+            <td>
+                    <button class="btn btn-primary" onclick=Edit(@item.Id)>EDIT</button>
+                 
+                <button class="btn btn-danger" onclick=Delete(@item.Id)>DELETE</button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+        function Delete(Id) {
+            $.post('/Student/Delete', { Id: Id }).done(function () {
+                
+                
+                window.location.href = window.location.href;
+            }).fail(function (xhr) {
+                alert('error');
+                console.log(xhr.responseText)
+            })
+        }
+        function Edit(id) {
+            var url = '/Student/GetById?Id=' + id;
+            window.location.href = url;
+        }
+     
+    </script>
+}

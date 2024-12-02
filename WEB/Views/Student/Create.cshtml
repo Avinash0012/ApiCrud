@@ -1,0 +1,61 @@
+﻿@model APICRUD.Entities_.Student
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Student</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+      
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class" class="control-label"></label>
+                <input asp-for="Class" class="form-control" />
+                <span asp-validation-for="Class" class="text-danger"></span>
+            </div>
+           
+        <button class="btn btn-primary" id="save">SAVE</button>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function(){
+            $("#save").click(function(){
+                alert("ft");
+                let param = {
+                    Name: $("#Name").val(),
+                    Email: $("#Email").val(),
+                    Class: $("#Class").val(),
+                }
+                $.post('/Student/Add',param).done(function(){
+                    alert("ADD Succeccfully");
+                    window.location.href='/Student/Index';
+                })
+                .fail(function(){
+                    alert("ERROR");
+                })
+            })
+        })
+    </script>
+}
